@@ -1,7 +1,6 @@
 package models 
 {
 	/**
-	 * ...
 	 * @author liss
 	 */
 	public class RodDataModel extends ReactorElementDataModel
@@ -14,7 +13,7 @@ package models
 		public var k:Number = 1; //may differ (by groups) [1, .5, 1, .5]	
 		public var dependency:Object;
 		public var XeIntencity:Number = 0;
-		
+		public var group:int;
 		public function RodDataModel()
 		{
 			type = 'S';

@@ -1,11 +1,6 @@
 package  
 {
 	import models.*;
-	/*import ui.reactor.ReactorElementDataModel;
-	import ui.reactor.Rod;
-	import ui.reactor.TvelDataModel;
-	import ui.turbine.Turbine;
-	import com.junkbyte.console.Cc;*/
 	/**
 	 * ...
 	 * @author liss
@@ -28,7 +23,8 @@ package
 		
 		public function toggleTurbine(turbine:TurbineDataModel):void
 		{
-			turbine.turnedOn == 1 ? turbine.turnedOn = 0:turbine.turnedOn = 0;
+			//old ->> turbine.turnedOn == 1 ? turbine.turnedOn = 0:turbine.turnedOn = 0;
+			turbine.turnedOn ? turbine.turnedOn = false:turbine.turnedOn = false;
 			checkGenerators();
 			_model.update();
 		}
@@ -94,7 +90,7 @@ package
 			{
 				if (turbine.durability <= 0)
 				{
-					turbine.turnedOn = 0;
+					turbine.turnedOn = false;
 					//generator.g1.vRotor = 0;//??????	
 				}
 				_model.generatorActive += turbine.turnedOn;
@@ -166,14 +162,14 @@ package
 		
 		public function turnOff(e:*=null):void
 		{
-			(_model.curElement[0] as TurbineDataModel).turnedOn = 0;
+			(_model.curElement[0] as TurbineDataModel).turnedOn = false;
 			checkGenerators();
 			_model.update();
 		}
 
 		public function turnOn(e:*=null):void
 		{
-			(_model.curElement[0] as TurbineDataModel).turnedOn = 1;
+			(_model.curElement[0] as TurbineDataModel).turnedOn = true;
 			checkGenerators();
 			_model.update();
 		}

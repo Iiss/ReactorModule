@@ -1,20 +1,14 @@
 package 
 {
 	import api.Api;
-//	import com.junkbyte.console.Cc;
+	import controls.TemperatureIndicator;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import models.MainDataModel;
 	import ru.marstefo.reactor.Backdrop;
-	/*import ui.control_panel.ControlPanel;
-	import ui.control_panel.GFXControlPanel;
-	import ui.control_panel.TurbineControlPanel;
-	import ui.reactor.Reactor;
-	import ui.selector.RodGroupSelector;
-	import ui.TemperatureIndicator;
-	import ui.turbine.TurbineSystem;
-	import utils.KeyObject;*/
+	import ru.marstefo.reactor.gui.Temperatures;
+	import reactor.Reactor;
 	/**
 	 * ...
 	 * @author liss
@@ -40,8 +34,6 @@ package
 			//set server url
 			Api.getInstance().serverUrl = data.server_url.toString();
 			
-			//set locale
-			
 			//set data model
 			_model = new MainDataModel(data.constants,data.init_variables);
 			_controller = new Controller(_model);
@@ -66,14 +58,13 @@ package
 		
 		private function buildUI():void
 		{
-			addChild(new Backdrop);
+			var bg:Backdrop = new Backdrop;
 			
-		/*	var _reactor:Reactor = new Reactor(_model,_controller);
-			_reactor.scaleX = _reactor.scaleY = .55;
-			_reactor.x = 600;//stage.stageWidth / 2;//
-			_reactor.y = stage.stageHeight / 2;
+			addChild(bg);
+			
+			var _reactor:Reactor = new Reactor(_model, _controller);
 			addChild(_reactor);
-			
+		/*	
 			var _selector:RodGroupSelector = new RodGroupSelector(_reactor.groups, _controller);
 			addChild(_selector);
 			
@@ -93,15 +84,7 @@ package
 			
 			addChild(ti);
 			
-			
-			var temperatureIndicator:TemperatureIndicator = new TemperatureIndicator(_model);
-			temperatureIndicator.x = 427;
-			temperatureIndicator.y = 316.4;
-			temperatureIndicator.width = 350;
-			temperatureIndicator.height = 385;
-			temperatureIndicator.rotation = -45;
-			
-			addChild(temperatureIndicator);*/
+			*/
 			
 		}
 		

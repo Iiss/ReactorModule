@@ -1,7 +1,6 @@
 package models 
 {
 	/**
-	 * ...
 	 * @author liss
 	 */
 	public class ReactorElementDataModel 
