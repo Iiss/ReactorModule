@@ -36,12 +36,19 @@ package
 				if (_model.curElementType != sel[0].type) _model.curElement.length = 0;
 				_model.curElement = _model.curElement.concat(sel);
 				_model.curElementType = sel[0].type;
+				
+				for each(var element:ReactorElementDataModel in sel)
+				{
+					element.selected = true;
+				} 
 			}
-			else if(sel is ReactorElementDataModel || sel is TurbineDataModel)
+			else if(sel is ReactorElementDataModel)
 			{
 				if (_model.curElementType != sel.type) _model.curElement.length = 0;
 				_model.curElement.push(sel);
 				_model.curElementType = sel.type;
+				
+				sel.selected = true;
 			}
 			else 
 			{
@@ -54,6 +61,10 @@ package
 		
 		public function clearSelection():void
 		{
+			for each(var sel:ReactorElementDataModel in _model.curElement)
+			{
+				sel.selected = false;
+			}
 			_model.curElement.length = 0;
 			_model.curElementType = '';
 			_model.update();

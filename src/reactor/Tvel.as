@@ -5,6 +5,9 @@ package reactor
 	import models.MainDataModel;
 	import models.TvelDataModel;
 	import ru.marstefo.reactor.gui.Tvs;
+	import utils.GraphicsUtils;
+	import org.osflash.signals.natives.NativeSignal;
+	import flash.events.MouseEvent;
 	/**
 	 * ...
 	 * @author liss
@@ -12,59 +15,49 @@ package reactor
 	public class Tvel extends Sprite 
 	{
 		private var _gfx:Tvs
-		private var _core:MovieClip
-		private var _glow:Sprite;
+		
 		private var _tvelData:TvelDataModel;
 		private var _mainModel:MainDataModel;
-		
+		private var _controller:Controller;
+		public var onClick:NativeSignal;
+		private var  _indicatorMask:Sprite;
 		public function Tvel(model:MainDataModel, controller:Controller) 
 		{
-			//super(model, controller);
+			_controller = controller;
 			
 			_gfx = new Tvs;
 			_gfx.width = _gfx.height = 99.2;
-		/*	_gfx.gotoAndStop(1);
-			_core = _gfx['h'];
-			_core.gotoAndStop(1);
-			_glow = _gfx['glow'];
-			*/
-			//TODO: check this out
-		//	_core.alpha = .4;
+			_gfx.mouseChildren = false;
+			
+		//	_indicatorMask = new Sprite;
+		//	_indicatorMask.
+			_gfx['durability_indicator'].addChild(_indicatorMask);
+		//	_gfx['durability_indicator'].mask = _indicatorMask;
+			
+			var value:Number = Math.round(Math.random() * 100);
+			trace('value=' + value);
+			trace(_gfx['durability_indicator'])
+			trace(_gfx['durability_indicator'].mask)
+			GraphicsUtils.drawPieMask(_indicatorMask.graphics, 30, 45, 40, 40,0,8);
 			addChild(_gfx);
 		
 			_mainModel = model;
-			
 			_tvelData = new TvelDataModel;
 			controller.addReactorElementDataModel(_tvelData);
 			
-			
-		/*	var hit:Sprite = new Sprite;
-			hit.graphics.beginFill(0xff0000, 0);
-			hit.graphics.drawCircle(0, 0, 70);
-			hit.graphics.endFill();
-			addChild(hit);
-			
-			hitArea	= hit;*/
+			onClick = new NativeSignal(_gfx, MouseEvent.CLICK, MouseEvent);
+			onClick.add(onMouseClick);
 		}
 		
-		//override 
-		public function set selected(value:Boolean):void
-		{
-		/*	if (_selected == value) return;
-			_selected = value;
-			
-			_selected ? _gfx.gotoAndStop(2) : _gfx.gotoAndStop(1);*/
-		}
-		
-		//override
 		public function update():void 
 		{
-		//	durability < 10 ? _core.gotoAndStop(2) : _core.gotoAndStop(1);
-		//	_glow.alpha = _model.t1/10000;
-			
-		//	_gfx['shad'].scaleX=_gfx['shad'].scaleY=_core.scaleX = _core.scaleY = .2+deep*0.008;
-			
-		//	super.update();
+		
+		}
+		
+		private function onMouseClick(e:MouseEvent):void
+		{
+			_controller.clearSelection();
+			_controller.pushSelection(_tvelData);
 		}
 		
 	}

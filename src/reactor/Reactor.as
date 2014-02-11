@@ -72,9 +72,6 @@ package reactor
 			drawTvels(model, controller);
 			drawRods(model, controller);
 			
-		//	onClick = new NativeSignal(this, MouseEvent.CLICK, MouseEvent);
-		//	this.onClick.add(onMouseClick);
-			
 			//clear init data
 			_rods = null;
 			_tvels = null;
@@ -83,23 +80,6 @@ package reactor
 		public function get groups():Array
 		{
 			return _groups;
-		}
-		
-		private function onMouseClick(e:MouseEvent):void
-		{
-			if (e.target is Rod)
-			{
-			//	if (!KeyObject.isDown(Keyboard.SHIFT)) 	_controller.clearSelection();
-				if (!Rod(e.target).selected)			_controller.pushSelection(e.target);
-			}
-			
-			if (e.target is Tvel)
-			{
-				_controller.clearSelection();
-				_controller.pushSelection(e.target);
-			}
-			
-		
 		}
 		
 		private function drawTvels(model:MainDataModel,controller:Controller):void
@@ -137,11 +117,11 @@ package reactor
 				rodModel.dependency = _rods[i].dependency;
 				rodModel.k = _rods[i].k;
 				
-				r = new Rod(rodView, rodModel, controller);
+				r = new Rod(rodView, rodModel, model, controller);
 				
 				if (!_groups[r.group]) _groups[r.group] = new Array;
 				
-				_groups[r.group].push(r);
+				_groups[r.group].push(rodModel);
 			}
 			
 			r = null;

@@ -5,10 +5,14 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.utils.Dictionary;
 	import models.MainDataModel;
 	import ru.marstefo.reactor.Backdrop;
+	import ru.marstefo.reactor.gui.RodGroupSelectorPanel;
 	import ru.marstefo.reactor.gui.Temperatures;
 	import reactor.Reactor;
+	import com.flashdynamix.utils.SWFProfiler;
+	import reactor.RodGroupSelector;
 	/**
 	 * ...
 	 * @author liss
@@ -21,7 +25,7 @@ package
 		public function Main():void 
 		{
 			//init profiler
-			//SWFProfiler.init(stage,this);
+			SWFProfiler.init(stage, this);
 			
 			//load config
 			Api.getInstance().loadConfig('data/config.xml',onConfig,onError);
@@ -59,24 +63,36 @@ package
 		private function buildUI():void
 		{
 			var bg:Backdrop = new Backdrop;
-			
+			bg.cacheAsBitmap = true;
 			addChild(bg);
 			
 			var _reactor:Reactor = new Reactor(_model, _controller);
 			addChild(_reactor);
-		/*	
-			var _selector:RodGroupSelector = new RodGroupSelector(_reactor.groups, _controller);
-			addChild(_selector);
 			
-			var _turbine:TurbineSystem = new TurbineSystem(_model, _controller);
+			var selectorView = new RodGroupSelectorPanel;
+			
+		//	
+			selectorView.x = 1223;
+			selectorView.y = 518.5;
+			addChild(selectorView);
+			
+			var groupSource = new Dictionary();
+			groupSource[selectorView['red_group_btn']] = _reactor.groups[3];
+			groupSource[selectorView['orange_group_btn']] = _reactor.groups[4];
+			groupSource[selectorView['blue_group_btn']] = _reactor.groups[2];
+			groupSource[selectorView['violet_group_btn']] = _reactor.groups[5];
+			
+			var _selector:RodGroupSelector = new RodGroupSelector(selectorView,groupSource, _controller);
+			
+		/*	var _turbine:TurbineSystem = new TurbineSystem(_model, _controller);
 			_turbine.x = 800;
 			_turbine.y = 100;
 			addChild(_turbine);
 			
 			var _controlPanel:ControlPanel = new ControlPanel(_model, _controller, 600, 200);
 			addChild(_controlPanel);
-			
-			var genWindow:TurbineControlPanel = new TurbineControlPanel(_model, _controller, this);
+			*/
+		/*	var genWindow:TurbineControlPanel = new TurbineControlPanel(_model, _controller, this);
 			
 			var ti:GFXControlPanel = new GFXControlPanel(_model, _controller);
 			ti.x = 700;
